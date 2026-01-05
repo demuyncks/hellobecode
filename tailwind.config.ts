@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Syne', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        display: ['Patrick Hand', 'cursive'],
+        body: ['Quicksand', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,11 +51,29 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Cartoon palette extras
+        cream: "hsl(45, 33%, 97%)",
+        brown: {
+          warm: "hsl(25, 55%, 45%)",
+          light: "hsl(25, 40%, 70%)",
+        },
+        green: {
+          dark: "hsl(95, 65%, 25%)",
+          light: "hsl(130, 35%, 55%)",
+          pale: "hsl(130, 30%, 85%)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        sketch: "255px 15px 225px 15px/15px 225px 15px 255px",
+      },
+      boxShadow: {
+        cartoon: "4px 4px 0px hsl(25, 40%, 70%)",
+        "cartoon-lg": "6px 6px 0px hsl(25, 40%, 70%)",
+        soft: "0 4px 20px hsl(25, 30%, 60%, 0.25)",
+        float: "0 10px 30px hsl(25, 30%, 50%, 0.2)",
       },
       keyframes: {
         "accordion-down": {
@@ -87,8 +105,16 @@ export default {
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
         float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
+          "0%, 100%": { transform: "translateY(0px) rotate(-2deg)" },
+          "50%": { transform: "translateY(-15px) rotate(2deg)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+        "bounce-soft": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
         },
         "pulse-soft": {
           "0%, 100%": { opacity: "0.6" },
@@ -103,7 +129,9 @@ export default {
         "scale-in": "scale-in 0.6s ease-out forwards",
         "slide-in-left": "slide-in-left 0.8s ease-out forwards",
         "slide-in-right": "slide-in-right 0.8s ease-out forwards",
-        float: "float 6s ease-in-out infinite",
+        float: "float 4s ease-in-out infinite",
+        wiggle: "wiggle 3s ease-in-out infinite",
+        "bounce-soft": "bounce-soft 2s ease-in-out infinite",
         "pulse-soft": "pulse-soft 3s ease-in-out infinite",
       },
     },
