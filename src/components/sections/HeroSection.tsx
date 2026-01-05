@@ -14,49 +14,81 @@ const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{ background: 'var(--gradient-hero)' }}
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background"
     >
-      {/* Animated background elements */}
+      {/* Animated doodle background elements */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Large floating shapes */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-10"
-          style={{ background: 'var(--gradient-tech)' }}
+          className="absolute top-[10%] left-[5%] w-32 h-32 border-4 border-dashed border-accent/30 rounded-full"
           animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
+            rotate: [0, 360],
+            scale: [1, 1.1, 1],
           }}
           transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
+            rotate: { duration: 20, repeat: Infinity, ease: 'linear' },
+            scale: { duration: 4, repeat: Infinity },
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full opacity-10"
-          style={{ background: 'var(--gradient-warm)' }}
+          className="absolute bottom-[15%] right-[10%] w-24 h-24 border-4 border-primary/30"
+          style={{ borderRadius: '30px 4px 30px 4px/4px 30px 4px 30px' }}
           animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
+            rotate: [0, -15, 0, 15, 0],
           }}
           transition={{
-            duration: 15,
+            duration: 6,
             repeat: Infinity,
-            ease: 'linear',
+            ease: 'easeInOut',
           }}
         />
-      </div>
+        <motion.div
+          className="absolute top-[30%] right-[20%] w-16 h-16 bg-secondary/10"
+          style={{ borderRadius: '20px 3px 20px 3px/3px 20px 3px 20px' }}
+          animate={{
+            y: [0, -20, 0],
+            rotate: [-5, 5, -5],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+          }}
+        />
+        
+        {/* Scattered doodle stars */}
+        {[...Array(8)].map((_, i) => (
+          <motion.span
+            key={i}
+            className="absolute text-xl"
+            style={{
+              left: `${10 + i * 12}%`,
+              top: `${15 + (i % 3) * 25}%`,
+              color: i % 2 === 0 ? 'hsl(var(--secondary))' : 'hsl(var(--accent))',
+              opacity: 0.4,
+            }}
+            animate={{
+              scale: [1, 1.3, 1],
+              rotate: [0, 10, 0],
+            }}
+            transition={{
+              duration: 2 + i * 0.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+            }}
+          >
+            {i % 3 === 0 ? '✦' : i % 3 === 1 ? '★' : '✧'}
+          </motion.span>
+        ))}
 
-      {/* Grid lines background */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="h-full w-full"
-          style={{
-            backgroundImage: `linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px),
-                            linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)`,
-            backgroundSize: '100px 100px',
-          }}
-        />
+        {/* Hand-drawn arrow doodles */}
+        <motion.svg 
+          className="absolute bottom-[40%] left-[15%] w-12 h-12 text-primary/30"
+          viewBox="0 0 50 50"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          <path d="M10,10 Q25,30 40,10 M25,25 L25,45 M20,40 L25,45 L30,40" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+        </motion.svg>
       </div>
 
       {/* Main content */}
@@ -66,8 +98,8 @@ const HeroSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <span className="inline-block text-sm md:text-base text-primary font-display font-medium tracking-widest uppercase mb-6">
-            A Personal Journey
+          <span className="inline-block text-sm md:text-base text-secondary font-display font-medium tracking-widest uppercase mb-6 px-4 py-2 bg-secondary/10 border-2 border-dashed border-secondary/30 rounded-full">
+            ✨ A Personal Journey ✨
           </span>
         </motion.div>
 
@@ -75,18 +107,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.4 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
+          className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight text-shadow-cartoon"
         >
           My Journey to{' '}
-          <span className="gradient-text">Data Science</span>
-          <br />& <span className="gradient-text-warm">AI</span>
+          <span className="gradient-text hand-underline">Data Science</span>
+          <br />& <span className="gradient-text-warm">AI</span> 🚀
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
+          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 font-body"
         >
           From curiosity to conviction — a story of exploration, experimentation, and finding purpose in technology.
         </motion.p>
@@ -102,7 +134,7 @@ const HeroSection = () => {
             onClick={scrollToNext}
             className="group"
           >
-            Start the Story
+            Start the Story ↓
             <motion.span
               animate={{ y: [0, 5, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
@@ -113,7 +145,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - pencil doodle style */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
@@ -121,13 +153,15 @@ const HeroSection = () => {
         transition={{ delay: 1.5 }}
       >
         <motion.div
-          className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex justify-center"
-          animate={{ opacity: [0.3, 0.7, 0.3] }}
+          className="w-8 h-12 border-3 border-border bg-card/50 flex justify-center"
+          style={{ borderRadius: '20px 4px 20px 4px/4px 20px 4px 20px' }}
+          animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
           <motion.div
-            className="w-1.5 h-3 bg-primary rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
+            className="w-2 h-3 bg-primary mt-2"
+            style={{ borderRadius: '4px' }}
+            animate={{ y: [0, 16, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
         </motion.div>

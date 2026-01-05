@@ -5,26 +5,27 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 font-display",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-base font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 font-display",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:opacity-90 hover:scale-105",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-border bg-transparent text-foreground hover:bg-muted hover:border-primary/50",
-        secondary: "bg-secondary text-secondary-foreground hover:opacity-90 hover:scale-105",
+        default: "bg-primary text-primary-foreground border-3 border-primary shadow-cartoon hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-cartoon-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+        destructive: "bg-destructive text-destructive-foreground border-3 border-destructive/80 shadow-cartoon hover:translate-x-[-2px] hover:translate-y-[-2px]",
+        outline: "border-3 border-border bg-background text-foreground shadow-cartoon hover:bg-muted hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-cartoon-lg",
+        secondary: "bg-secondary text-secondary-foreground border-3 border-secondary/80 shadow-cartoon hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-cartoon-lg",
         ghost: "hover:bg-muted hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-[0_0_40px_hsl(190,80%,55%,0.4)] hover:scale-105 border border-primary/30",
-        cta: "bg-gradient-to-r from-secondary to-orange-500 text-secondary-foreground hover:shadow-[0_0_40px_hsl(38,92%,55%,0.4)] hover:scale-105 font-bold",
-        glass: "bg-foreground/5 backdrop-blur-md border border-foreground/10 text-foreground hover:bg-foreground/10 hover:border-foreground/20",
+        hero: "bg-gradient-to-r from-secondary to-accent text-secondary-foreground border-3 border-secondary/50 shadow-cartoon-lg hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[8px_8px_0px_hsl(25,40%,70%)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-cartoon",
+        cta: "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground border-3 border-primary/50 shadow-cartoon-lg hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[8px_8px_0px_hsl(25,40%,70%)] font-bold",
+        glass: "bg-card/80 backdrop-blur-sm border-3 border-border text-foreground shadow-soft hover:bg-card hover:translate-y-[-2px]",
+        sketch: "bg-card text-foreground border-3 border-border hover:border-primary shadow-cartoon hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-cartoon-lg",
       },
       size: {
-        default: "h-10 px-6 py-2",
-        sm: "h-9 rounded-md px-4",
-        lg: "h-12 rounded-lg px-8 text-base",
-        xl: "h-14 rounded-xl px-10 text-lg",
-        icon: "h-10 w-10",
+        default: "h-11 px-6 py-2 rounded-[20px_4px_20px_4px/4px_20px_4px_20px]",
+        sm: "h-9 px-4 rounded-[15px_3px_15px_3px/3px_15px_3px_15px] text-sm",
+        lg: "h-13 px-8 rounded-[25px_5px_25px_5px/5px_25px_5px_25px] text-lg",
+        xl: "h-14 px-10 rounded-[30px_6px_30px_6px/6px_30px_6px_30px] text-xl",
+        icon: "h-10 w-10 rounded-[15px_4px_15px_4px/4px_15px_4px_15px]",
       },
     },
     defaultVariants: {
