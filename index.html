@@ -26,6 +26,15 @@
   <meta property="og:description" content="A website is worth a thousand words">
   <meta name="twitter:description" content="A website is worth a thousand words">
   <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/HMNjFONn2mV19ptkdFj0b3qQcIP2/uploads/1767613739545-icon.png">
+  <script>
+  (function() {
+    var redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect != location.href) {
+      history.replaceState(null, null, redirect);
+    }
+  })();
+</script>
   <script type="module" crossorigin src="/hellobecode/assets/index-CnNWaEBP.js"></script>
   <link rel="stylesheet" crossorigin href="/hellobecode/assets/index-5LjRI1WO.css">
 </head>
