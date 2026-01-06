@@ -1,14 +1,42 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 
 const HeroSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const [hasClicked, setHasClicked] = useState(false);
+  const [matrixColumns, setMatrixColumns] = useState<number[]>([]);
+
+  // Bloquer le scroll tant qu'on n'a pas cliqué
+  useEffect(() => {
+    if (!hasClicked) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [hasClicked]);
+
+  // Générer les colonnes Matrix
+  useEffect(() => {
+    if (hasClicked) {
+      const columns = Array.from({ length: 30 }, (_, i) => i);
+      setMatrixColumns(columns);
+    }
+  }, [hasClicked]);
 
   const scrollToNext = () => {
-    document.getElementById('scene-1')?.scrollIntoView({ behavior: 'smooth' });
+    setHasClicked(true);
+    
+    // Attendre un peu pour l'effet Matrix avant de scroller
+    setTimeout(() => {
+      document.getElementById('scene-1')?.scrollIntoView({ behavior: 'smooth' });
+    }, 3500);
   };
 
   return (
@@ -16,6 +44,33 @@ const HeroSection = () => {
       ref={ref}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background"
     >
+      {/* Effet Matrix après le clic */}
+      {hasClicked && (
+        <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+          {matrixColumns.map((col) => (
+            <motion.div
+              key={col}
+              className="absolute top-0 text-xs font-mono text-gray-400/70"
+              style={{
+                left: `${(col / 30) * 100}%`,
+              }}
+              initial={{ y: -100 }}
+              animate={{
+                y: ['0vh', '110vh'],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 2,
+                repeat: Infinity,
+                ease: 'linear',
+                delay: Math.random() * 2,
+              }}
+            >
+              {Array.from({ length: 20 }, () => Math.random() > 0.5 ? '1' : '0').join('\n')}
+            </motion.div>
+          ))}
+        </div>
+      )}
+
       {/* Animated doodle background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large floating shapes */}
@@ -99,7 +154,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.2 }}
         >
           <span className="inline-block text-sm md:text-base text-secondary font-display font-medium tracking-widest uppercase mb-6 px-4 py-2 bg-secondary/10 border-2 border-dashed border-secondary/30 rounded-full">
-            ✨ A Personal Journey ✨
+            HOW and WHY I'm here today 🎒
           </span>
         </motion.div>
 
@@ -111,7 +166,7 @@ const HeroSection = () => {
         >
           My Journey to{' '}
           <span className="gradient-text hand-underline">Data Science</span>
-          <br />& <span className="gradient-text-warm">AI</span> 🚀
+          <br />& <span className="gradient-text-warm">AI</span> 👾​
         </motion.h1>
 
         <motion.p

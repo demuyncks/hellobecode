@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import SceneWrapper from '@/components/story/SceneWrapper';
-import { Music2, Hand, FileText, Gift, Bot, Flag } from 'lucide-react';
+import { Music2, Hand, FileText, Gift, Bot, Flag, Computer, Laptop } from 'lucide-react';
 
 const experiences = [
   {
@@ -32,7 +32,7 @@ const experiences = [
     delay: 0.2,
   },
   {
-    icon: Gift,
+    icon: Laptop,
     title: 'Entrepreneurship',
     description: 'Year-end boxes',
     color: 'bg-accent/30 border-accent',
@@ -52,7 +52,7 @@ const experiences = [
   {
     icon: Flag,
     title: 'Armenia Internship',
-    description: 'International experience',
+    description: 'International experience in NGO',
     color: 'bg-secondary/20 border-secondary',
     iconColor: 'text-secondary',
     emoji: '🇦🇲',
@@ -133,6 +133,37 @@ const Scene3Experimentation = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Bouton "So what Pal?" */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 1.2 }}
+          className="flex justify-center mt-12"
+        >
+          <motion.button
+            onClick={() => document.getElementById('scene-4')?.scrollIntoView({ behavior: 'smooth' })}
+            className="group relative px-8 py-4 bg-gradient-to-br from-primary/20 to-accent/20 border-4 border-primary text-foreground font-display font-bold text-lg hover:bg-primary hover:text-card transition-all shadow-cartoon-lg"
+            style={{ borderRadius: '30px 8px 30px 8px/8px 30px 8px 30px' }}
+            whileHover={{ scale: 1.05, rotate: -2 }}
+            whileTap={{ scale: 0.95, rotate: 2 }}
+          >
+            So what{' '}
+            <span className="text-2xl text-primary group-hover:text-card font-black">
+              Pal
+            </span>
+            <span className="text-2xl">?</span>
+            
+            {/* Petite flèche décorative */}
+            <motion.span
+              className="inline-block ml-2"
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              ↓
+            </motion.span>
+          </motion.button>
+        </motion.div>
       </div>
     </SceneWrapper>
   );

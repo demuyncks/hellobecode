@@ -1,13 +1,14 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import SceneWrapper from '@/components/story/SceneWrapper';
 import ProgressiveText from '@/components/story/ProgressiveText';
 import FloatingIcon from '@/components/story/FloatingIcon';
-import { Leaf, Users, Calculator } from 'lucide-react';
+import { Leaf, Users, Calculator, Play } from 'lucide-react';
 
 const Scene1Beginning = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: false, margin: '-20%' });
+  const [hasRunLife, setHasRunLife] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -17,6 +18,14 @@ const Scene1Beginning = () => {
   const iconY1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const iconY2 = useTransform(scrollYProgress, [0, 1], [50, -150]);
   const iconY3 = useTransform(scrollYProgress, [0, 1], [150, -50]);
+
+  const handleRunLife = () => {
+    setHasRunLife(true);
+    
+    setTimeout(() => {
+      document.getElementById('scene-2')?.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  };
 
   return (
     <SceneWrapper id="scene-1" className="bg-background">
@@ -48,7 +57,7 @@ const Scene1Beginning = () => {
                   <div className="text-muted-foreground mb-1">{">> x = linspace(0, 2*pi, 100);"}</div>
                   <div className="text-muted-foreground mb-1">{">> y = sin(x) .* exp(-x/10);"}</div>
                   <div className="text-muted-foreground mb-1">{">> plot(x, y, 'LineWidth', 2)"}</div>
-                  <div className="text-accent mt-3 font-semibold">{"% First steps into programming... ✨"}</div>
+                  <div className="text-accent mt-3 font-semibold">{"% First steps into programming... "}</div>
                   <motion.div
                     className="inline-block w-2 h-4 bg-primary ml-1"
                     style={{ borderRadius: '2px' }}
@@ -57,13 +66,44 @@ const Scene1Beginning = () => {
                   />
                 </div>
               </div>
-              {/* Monitor stand - sketchy */}
-              <div className="flex justify-center mt-4">
-                <div className="w-16 h-4 bg-muted border-2 border-border" style={{ borderRadius: '8px 2px 0 0' }} />
-              </div>
-              <div className="flex justify-center">
-                <div className="w-24 h-3 bg-muted border-2 border-t-0 border-border" style={{ borderRadius: '0 0 8px 8px' }} />
-              </div>
+
+              {/* Bouton RUN .life - style programmation */}
+              <motion.div 
+                className="flex justify-center mt-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                <motion.button
+                  onClick={handleRunLife}
+                  disabled={hasRunLife}
+                  className="group relative px-6 py-3 bg-card border-3 border-primary font-mono font-bold text-primary hover:bg-primary hover:text-card transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-cartoon"
+                  style={{ borderRadius: '8px 2px 8px 2px/2px 8px 2px 8px' }}
+                  whileHover={{ scale: hasRunLife ? 1 : 1.05 }}
+                  whileTap={{ scale: hasRunLife ? 1 : 0.95 }}
+                >
+                  <Play className="inline-block w-5 h-5 mr-2 -mt-1" />
+                  RUN .life
+                  {!hasRunLife && (
+                    <motion.span
+                      className="inline-block ml-2"
+                      animate={{ opacity: [1, 0] }}
+                      transition={{ duration: 0.8, repeat: Infinity }}
+                    >
+                      _
+                    </motion.span>
+                  )}
+                  {hasRunLife && (
+                    <motion.span
+                      className="ml-2 text-accent"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      ✓
+                    </motion.span>
+                  )}
+                </motion.button>
+              </motion.div>
             </div>
 
             {/* Floating icons with parallax - cartoon style */}
@@ -119,7 +159,7 @@ const Scene1Beginning = () => {
             />
 
             <ProgressiveText
-              text="Driven by curiosity about the world, strong mathematical skills, and values centered on ecology and social impact."
+              text="A cute baby driven by social impact and ecology followed the bio-engineer path. He discovered numerous interesting areas but was still looking for himself."
               className="text-base md:text-lg text-muted-foreground leading-relaxed font-body"
               delay={0.6}
             />

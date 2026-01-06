@@ -3,26 +3,20 @@ import { useRef } from 'react';
 import SceneWrapper from '@/components/story/SceneWrapper';
 import ProgressiveText from '@/components/story/ProgressiveText';
 import FloatingIcon from '@/components/story/FloatingIcon';
-import { Globe, Divide, Bird, Phone, Monitor, MessageCircle, BookOpen } from 'lucide-react';
+import { Globe, Divide, Bird } from 'lucide-react';
 
 const Scene5Revelation = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: '-20%' });
 
   const surroundingIcons = [
-    { icon: Globe, label: 'International', color: 'bg-blue-100 border-blue-400', iconColor: 'text-blue-600', position: 'top-0 left-1/4', emoji: '🌍' },
-    { icon: Divide, label: 'Mathematical', color: 'bg-primary/20 border-primary', iconColor: 'text-primary', position: 'top-0 right-1/4', emoji: '➗' },
-    { icon: Bird, label: 'Independence', color: 'bg-accent/30 border-accent', iconColor: 'text-secondary', position: 'bottom-0 left-1/3', emoji: '🦅' },
-  ];
-
-  const actionIcons = [
-    { icon: Phone, label: 'Calls', position: '-left-8 top-1/4', emoji: '📞' },
-    { icon: Monitor, label: 'Research', position: '-right-8 top-1/3', emoji: '💻' },
-    { icon: MessageCircle, label: 'Discussions', position: '-left-4 bottom-1/4', emoji: '💬' },
+    { icon: Globe, label: 'International', color: 'bg-blue-100 border-blue-400', iconColor: 'text-blue-600', position: 'top-10 left-1', emoji: '🌍' },
+    { icon: Divide, label: 'Mathematical', color: 'bg-primary/20 border-primary', iconColor: 'text-primary', position: 'top-40 right-1', emoji: '➗' },
+    { icon: Bird, label: 'Polyvalence', color: 'bg-accent/30 border-accent', iconColor: 'text-secondary', position: 'top-80 left-6', emoji: '🦅' },
   ];
 
   return (
-    <SceneWrapper id="scene-5" className="bg-background">
+    <SceneWrapper id="scene-5" className="!py-0 bg-background">
       <div ref={ref} className="text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -77,66 +71,89 @@ const Scene5Revelation = () => {
             </div>
           </motion.div>
 
-          {/* Book visual - cartoon style */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-            animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="relative mx-auto w-64 md:w-80"
-          >
-            <div className="relative">
-              {/* Book cover */}
-              <div 
-                className="bg-primary border-4 border-primary shadow-cartoon-lg p-1"
-                style={{ borderRadius: '5px 20px 20px 5px' }}
-              >
-                <div 
-                  className="bg-card p-6 md:p-8"
-                  style={{ borderRadius: '3px 15px 15px 3px' }}
-                >
-                  <BookOpen className="w-12 h-12 md:w-16 md:h-16 text-primary mx-auto mb-4" />
-                  <h3 className="font-display font-bold text-lg md:text-xl mb-2">80,000 Hours 📖</h3>
-                  <p className="text-sm text-muted-foreground font-body">Finding your path</p>
-                </div>
-              </div>
-              
-              {/* Book spine effect */}
-              <div 
-                className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-primary to-primary/80"
-                style={{ borderRadius: '5px 0 0 5px' }}
-              />
-
-              {/* Page lines decoration */}
-              <div className="absolute right-2 top-4 bottom-4 w-1 flex flex-col gap-1">
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className="h-2 bg-border/50 rounded" />
-                ))}
-              </div>
+          {/* Book image avec animation de lumière */}
+          <div className="relative mx-auto w-80 md:w-96 my-12">
+            {/* Conteneur des rayons de lumière */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] pointer-events-none">
+              {[...Array(16)].map((_, i) => {
+                const angle = (i * 360) / 16;
+                return (
+                  <motion.div
+                    key={i}
+                    className="absolute left-1/2 top-1/2 origin-bottom"
+                    style={{
+                      width: '6px',
+                      height: '180px',
+                      background: 'linear-gradient(to top, rgba(250, 204, 21, 0.8), transparent)',
+                      transform: `translateX(-3px) translateY(-180px) rotate(${angle}deg)`,
+                      filter: 'blur(3px)',
+                    }}
+                    initial={{ scaleY: 0, opacity: 0 }}
+                    animate={isInView ? {
+                      scaleY: [0, 1.2, 1, 1.1],
+                      opacity: [0, 0.9, 0.7, 0.8],
+                    } : {}}
+                    transition={{
+                      duration: 2,
+                      delay: 1 + (i * 0.05),
+                      repeat: Infinity,
+                      repeatDelay: 1.5,
+                      ease: "easeOut",
+                    }}
+                  />
+                );
+              })}
             </div>
 
-            {/* Action icons around the book */}
-            {actionIcons.map((item, index) => (
-              <motion.div
-                key={item.label}
-                className={`absolute ${item.position}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-              >
-                <div 
-                  className="w-10 h-10 bg-muted border-3 border-border flex items-center justify-center shadow-cartoon"
-                  style={{ borderRadius: '12px 3px 12px 3px/3px 12px 3px 12px' }}
-                >
-                  <span className="text-lg">{item.emoji}</span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+            {/* Halo lumineux central */}
+            <motion.div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] pointer-events-none"
+              style={{
+                background: 'radial-gradient(circle, rgba(250, 204, 21, 0.4) 0%, rgba(250, 204, 21, 0.2) 40%, transparent 70%)',
+                filter: 'blur(40px)',
+              }}
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={isInView ? {
+                scale: [0.8, 1.2, 1],
+                opacity: [0.3, 0.6, 0.4],
+              } : {}}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+
+            {/* L'image du livre */}
+            <motion.img
+              src="/80000hours.png"
+              alt="80,000 Hours Book"
+              className="relative z-10 w-full h-auto"
+              initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+              transition={{ duration: 1, delay: 0.4 }}
+              whileHover={{ scale: 1.05, rotate: 2 }}
+            />
+
+            {/* Ombre portée */}
+            <motion.div
+              className="absolute -bottom-6 left-12 right-12 h-8 bg-gray-900/40 blur-2xl z-0"
+              style={{ borderRadius: '50%' }}
+              animate={{
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
 
           {/* Text content */}
           <div className="mt-12 space-y-4">
             <ProgressiveText
-              text="IT speaks to me — it combines my logical and mathematical strengths, offers international horizons, and provides independence."
+              text="IT speaks to me — it combines my logical and mathematical strengths, offers international horizons, and provides polyvalence."
               className="text-lg md:text-xl text-foreground font-medium max-w-xl mx-auto font-body"
               delay={0.6}
             />

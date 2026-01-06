@@ -1,141 +1,116 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import SceneWrapper from '@/components/story/SceneWrapper';
-import { Music, Backpack, Briefcase, GraduationCap, Bot, Plane } from 'lucide-react';
-
-const orbitIcons = [
-  { icon: Music, label: 'Music', color: 'bg-pink-100 border-pink-400', iconColor: 'text-pink-600' },
-  { icon: Backpack, label: 'Travel', color: 'bg-orange-100 border-orange-400', iconColor: 'text-orange-600' },
-  { icon: Briefcase, label: 'Work', color: 'bg-blue-100 border-blue-400', iconColor: 'text-blue-600' },
-  { icon: GraduationCap, label: 'Teaching', color: 'bg-accent/20 border-accent', iconColor: 'text-secondary' },
-  { icon: Bot, label: 'AI', color: 'bg-purple-100 border-purple-400', iconColor: 'text-purple-600' },
-  { icon: Plane, label: 'Internship', color: 'bg-secondary/20 border-secondary', iconColor: 'text-secondary' },
-];
+import { Guitar, CloudLightning, Beer, GraduationCap, Backpack, FlaskConical, Music, Laptop } from 'lucide-react';
 
 const Scene2Graduation = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: '-20%' });
+  const isInView = useInView(ref, { once: true, margin: '-20%' });
+
+  // Scroll automatique vers la section suivante après l'animation
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        document.getElementById('scene-3')?.scrollIntoView({ behavior: 'smooth' });
+      }, 8000); // 7 secondes d'animation + 2 secondes d'attente
+
+      return () => clearTimeout(timer);
+    }
+  }, [isInView]);
+
+  // Icônes le long du chemin avec leurs positions et délais
+  const pathIcons = [
+    { Icon: Guitar, x: 120, y: 30, delay: 0.7, color: 'bg-pink-100/20 border-pink-400', iconColor: 'text-pink-600', side: 'right' },
+    { Icon: CloudLightning, x: 180, y: 200, delay: 2.1, color: 'bg-gray-100/20 border-gray-400', iconColor: 'text-gray-600', side: 'right' },
+    { Icon: Beer, x: 240, y: 100, delay: 1.4, color: 'bg-amber-100/20 border-amber-400', iconColor: 'text-amber-600', side: 'left' },
+    { text: 'PSAD', x: 60, y: 280, delay: 2.8, color: 'bg-accent/20 border-accent', textColor: 'text-secondary', side: 'left' },
+    { Icon: GraduationCap, x: 230, y: 350, delay: 3.5, color: 'bg-purple-100/20 border-purple-400', iconColor: 'text-purple-600', side: 'right' },
+    { Icon: Backpack, x: 150, y: 440, delay: 4.2, color: 'bg-green-100/20 border-green-400', iconColor: 'text-green-600', side: 'right' },
+    { Icon: FlaskConical, x: 200, y: 560, delay: 4.9, color: 'bg-blue-100/20 border-blue-400', iconColor: 'text-blue-600', side: 'left' },
+    { Icon: Music, x: 60, y: 590, delay: 5.6, color: 'bg-rose-100/20 border-rose-400', iconColor: 'text-rose-600', side: 'left' },
+    { Icon: Laptop, x: 80, y: 710, delay: 6.3, color: 'bg-indigo-100/20 border-indigo-400', iconColor: 'text-indigo-600', side: 'left' },
+  ];
 
   return (
     <SceneWrapper id="scene-2">
-      <div ref={ref} className="text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20, rotate: -2 }}
-          animate={isInView ? { opacity: 1, y: 0, rotate: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-3xl md:text-5xl font-display font-bold mb-16 text-shadow-cartoon"
+      <div ref={ref} className="relative min-h-screen flex items-center justify-center">
+        {/* Chemin tortueux animé en pointillés */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 400 800"
+          preserveAspectRatio="xMidYMid meet"
         >
-          <span className="gradient-text-warm">So what now?</span> 🤔
-        </motion.h2>
-
-        {/* Central figure with orbiting icons */}
-        <div className="relative h-[400px] md:h-[500px] flex items-center justify-center">
-          {/* Graduate figure - cartoon style */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative z-10"
-          >
-            <div 
-              className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-primary/20 to-accent/20 border-4 border-primary flex items-center justify-center shadow-cartoon-lg"
-              style={{ borderRadius: '50% 45% 50% 45%/45% 50% 45% 50%' }}
-            >
-              <GraduationCap className="w-16 h-16 md:w-20 md:h-20 text-primary" />
-            </div>
-            <motion.div
-              className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.6 }}
-            >
-              <span 
-                className="text-sm text-foreground font-display font-medium bg-card px-4 py-2 border-3 border-border shadow-cartoon"
-                style={{ borderRadius: '15px 3px 15px 3px/3px 15px 3px 15px' }}
-              >
-                🎓 Graduated!
-              </span>
-            </motion.div>
-          </motion.div>
-
-          {/* Orbiting icons - cartoon style */}
-          {orbitIcons.map((item, index) => {
-            const angle = (index * 360) / orbitIcons.length;
-            const radius = 160;
-            
-            return (
-              <motion.div
-                key={item.label}
-                className="absolute"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={
-                  isInView
-                    ? {
-                        opacity: 1,
-                        scale: 1,
-                        rotate: [angle, angle + 360],
-                      }
-                    : {}
-                }
-                transition={{
-                  opacity: { duration: 0.5, delay: 0.5 + index * 0.1 },
-                  scale: { duration: 0.5, delay: 0.5 + index * 0.1 },
-                  rotate: {
-                    duration: 30,
-                    repeat: Infinity,
-                    ease: 'linear',
-                    delay: 0.5 + index * 0.1,
-                  },
-                }}
-                style={{
-                  transformOrigin: 'center center',
-                }}
-              >
-                <motion.div
-                  className={`w-14 h-14 md:w-16 md:h-16 ${item.color} border-3 flex items-center justify-center shadow-cartoon cursor-pointer group`}
-                  style={{
-                    transform: `translateX(${radius}px)`,
-                    borderRadius: '20px 4px 20px 4px/4px 20px 4px 20px',
-                  }}
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  animate={{
-                    rotate: [-angle, -angle - 360],
-                  }}
-                  transition={{
-                    rotate: {
-                      duration: 30,
-                      repeat: Infinity,
-                      ease: 'linear',
-                    },
-                  }}
-                >
-                  <item.icon className={`w-7 h-7 md:w-8 md:h-8 ${item.iconColor}`} />
-                  <span className="absolute -bottom-8 text-xs font-display font-medium text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                    {item.label}
-                  </span>
-                </motion.div>
-              </motion.div>
-            );
-          })}
-
-          {/* Orbit ring - dashed hand-drawn style */}
-          <motion.div
-            className="absolute w-[320px] h-[320px] md:w-[400px] md:h-[400px] border-3 border-dashed border-border/50"
-            style={{ borderRadius: '50% 48% 52% 48%/48% 50% 48% 52%' }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1, delay: 0.2 }}
+          {/* Chemin principal ondulant style cartoon */}
+          <motion.path
+            d="M 200 0
+               C 250 80, 280 120, 200 200
+               C 120 280, 150 320, 220 400
+               C 290 480, 260 520, 180 600
+               C 100 680, 160 720, 200 800"
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeDasharray="15 10"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
+            transition={{ 
+              pathLength: { duration: 7, ease: "easeInOut" },
+              opacity: { duration: 0.5 }
+            }}
           />
-        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-lg text-muted-foreground mt-12 max-w-xl mx-auto font-body"
-        >
-          A world of possibilities awaited — from music to travel, teaching to tech... ✨
-        </motion.p>
+          {/* Flèche à la fin du chemin */}
+          <motion.polygon
+            points="200,800 195,785 205,785"
+            fill="hsl(var(--primary))"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ 
+              delay: 6.5,
+              duration: 0.5,
+              ease: "backOut"
+            }}
+          />
+        </svg>
+
+        {/* Icônes qui apparaissent le long du chemin */}
+        <div className="absolute inset-0 w-full h-full">
+          <div className="relative w-full h-full" style={{ maxWidth: '400px', margin: '0 auto' }}>
+            {pathIcons.map((item, index) => (
+              <motion.div
+                key={index}
+                className="absolute"
+                style={{
+                  left: `${(item.x / 400) * 100}%`,
+                  top: `${(item.y / 800) * 100}%`,
+                  transform: 'translate(-50%, -50%)',
+                }}
+                initial={{ scale: 0, opacity: 0, rotate: -15 }}
+                animate={isInView ? { scale: 1, opacity: 1, rotate: 0 } : {}}
+                transition={{ 
+                  delay: item.delay,
+                  duration: 0.5,
+                  ease: "backOut"
+                }}
+                whileHover={{ scale: 1.15, rotate: 5 }}
+              >
+                <div 
+                  className={`w-16 h-16 md:w-20 md:h-20 ${item.color} border-3 flex items-center justify-center shadow-cartoon cursor-pointer`}
+                  style={{ borderRadius: '25px 5px 25px 5px/5px 25px 5px 25px' }}
+                >
+                  {item.Icon ? (
+                    <item.Icon className={`w-8 h-8 md:w-10 md:h-10 ${item.iconColor}`} />
+                  ) : (
+                    <span className={`text-sm md:text-base font-display font-bold ${item.textColor}`}>
+                      {item.text}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </SceneWrapper>
   );

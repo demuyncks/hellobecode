@@ -120,7 +120,7 @@ const Contact = () => {
         >
           {/* Email */}
           <motion.a
-            href="mailto:hello@example.com"
+            href="mailto:demuyncksimon@hotmail.com"
             className="group"
             whileHover={{ scale: 1.05, rotate: -2 }}
           >
@@ -135,13 +135,13 @@ const Contact = () => {
                 <Mail className="w-7 h-7 text-secondary" />
               </div>
               <h3 className="font-display font-semibold text-lg mb-1">Email 📧</h3>
-              <p className="text-sm text-muted-foreground font-body">hello@example.com</p>
+              <p className="text-sm text-muted-foreground font-body break-words">And I'll answer</p>
             </div>
           </motion.a>
 
           {/* LinkedIn */}
           <motion.a
-            href="https://linkedin.com/in/yourprofile"
+            href="https://www.linkedin.com/in/simon-de-muynck-a385712a3/"
             target="_blank"
             rel="noopener noreferrer"
             className="group"
@@ -164,7 +164,7 @@ const Contact = () => {
 
           {/* Phone */}
           <motion.a
-            href="tel:+32123456789"
+            href="tel:+32488172004"
             className="group"
             whileHover={{ scale: 1.05, rotate: -1 }}
           >
@@ -179,7 +179,7 @@ const Contact = () => {
                 <Phone className="w-7 h-7 text-primary" />
               </div>
               <h3 className="font-display font-semibold text-lg mb-1">Phone 📱</h3>
-              <p className="text-sm text-muted-foreground font-body">+32 123 456 789</p>
+              <p className="text-sm text-muted-foreground font-body">+32 488 17 20 04</p>
             </div>
           </motion.a>
         </motion.div>
