@@ -154,7 +154,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.2 }}
         >
           <span className="inline-block text-sm md:text-base text-secondary font-display font-medium tracking-widest uppercase mb-6 px-4 py-2 bg-secondary/10 border-2 border-dashed border-secondary/30 rounded-full">
-            HOW and WHY I'm here today 🎒
+            HOW and WHY I'm here today 🎒HEIN ET PUIS KOI
           </span>
         </motion.div>
 
